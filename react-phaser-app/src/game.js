@@ -44,11 +44,6 @@ componentDidMount() {
 //   }
 // }
 
-userDisplay = () => {
-  console.log('bruv')
-  
-  return `${this.state.name}`
-}
 
   render() {
     return (
