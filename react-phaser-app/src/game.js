@@ -115,6 +115,10 @@ update (time, delta) {
     this.player.setVelocityX(160);
 
     this.player.anims.play('right', true);
+  } else if(this.cursors.up.isDown) {
+    this.player.setVelocityY(160)
+  } else if (this.cursors.down.isDown) {
+    this.player.setVelocityY(-160)
   }
   else {
     this.player.setVelocityX(0);
