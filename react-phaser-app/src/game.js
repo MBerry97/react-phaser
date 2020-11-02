@@ -129,6 +129,7 @@ left:Phaser.Input.Keyboard.KeyCodes.A,
 right:Phaser.Input.Keyboard.KeyCodes.D});
 
  const camera = this.cameras.main;
+ camera.startFollow(this.player)
 
  this.input.keyboard.addKeys('W,S,A,D')
  
@@ -140,6 +141,8 @@ right:Phaser.Input.Keyboard.KeyCodes.D});
     // down: this.cursors.down,
     speed: 0.5
   });
+
+
 }
 
 update (time, delta) {
