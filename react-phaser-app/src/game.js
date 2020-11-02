@@ -3,8 +3,10 @@ import Phaser from 'phaser'
 import tileSet from './assets/tuxmon-sample.png'
 import tileJson from './assets/testmaprealnum2.json'
 import dude from './assets/dude.png'
+import logToConsole from './testFunctions'
 
 class Game extends Component {
+  
 componentDidMount() {
   this.game = new Phaser.Game({
     type: Phaser.AUTO,
@@ -24,9 +26,15 @@ componentDidMount() {
       update: this.update
     }
   })
-  this.player = ''
 
 }
+
+// componentDidUpdate(prevProps, prevState) {
+//   if (prevProps.name !== this.props.user) {
+//     this.setState({user: this.props.name})
+//   }
+// }
+
 
   render() {
     return (
@@ -41,7 +49,8 @@ preload () {
   
 this.load.image('tiles', tileSet);
 this.load.tilemapTiledJSON('map', tileJson);
-
+this.load.spritesheet('dude', 'https://i.imgur.com/L1cGcT6.png', { frameWidth: 32, frameHeight: 48 })
+// this.load.text('user', this.props.name)
 //  this.load.image('dude',
 //     dude,
 //     { frameWidth: 32, frameHeight: 48 }
@@ -54,11 +63,11 @@ const map = this.make.tilemap({
   });
   const tileset = map.addTilesetImage('test', 'tiles');
   const tileLayer = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
- 
+  // this.add.text(50, 225, `${this.props.name}`)
   
-  this.player = this.physics.add.sprite(50, 225, 'dude');
+  this.add.image(50, 225, 'dude');
 
-  this.cursors = this.input.keyboard.createCursorKeys();
+  this.add.text(50,225, logToConsole())
 }
 
 update (time, delta) {
