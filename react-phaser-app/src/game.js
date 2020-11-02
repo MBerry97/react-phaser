@@ -75,6 +75,7 @@ const map = this.make.tilemap({
   });
   const tileset = map.addTilesetImage('test', 'tiles');
   const tileLayer = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
+  tileLayer.setCollisionByProperty({ collides: true });
   // this.add.text(50, 225, `${this.props.name}`)
   
   // this.add.image(50, 225, 'dude');
@@ -82,6 +83,7 @@ const map = this.make.tilemap({
   
 
   this.player = this.physics.add.sprite(50, 225, 'dude');
+  this.physics.add.collider(this.player, tileLayer)
   this.anims.create({
     key: 'left',
     frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -136,6 +138,8 @@ update (time, delta) {
      this.player.setVelocityY(0);
     this.player.anims.play('turn');
   }
+
+  this.player.body.velocity.normalize().scale(70);
 }
 
 
