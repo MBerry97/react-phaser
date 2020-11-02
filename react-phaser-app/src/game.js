@@ -102,6 +102,14 @@ const map = this.make.tilemap({
     repeat: -1
   });
 
+  this.anims.create({
+    key: 'up',
+    frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
+
  this.cursors = this.input.keyboard.createCursorKeys();
 }
 
@@ -115,14 +123,17 @@ update (time, delta) {
     this.player.setVelocityX(160);
 
     this.player.anims.play('right', true);
-  } else if(this.cursors.up.isDown) {
-    this.player.setVelocityY(160)
-  } else if (this.cursors.down.isDown) {
+  } 
+  else if(this.cursors.up.isDown) {
     this.player.setVelocityY(-160)
+    this.player.anims.play('up', true);
+
+  } else if (this.cursors.down.isDown) {
+    this.player.setVelocityY(160)
   }
   else {
     this.player.setVelocityX(0);
-
+     this.player.setVelocityY(0);
     this.player.anims.play('turn');
   }
 }
