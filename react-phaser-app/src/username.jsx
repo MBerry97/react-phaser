@@ -13,7 +13,6 @@ class Username extends Component {
 
   }
 
-
   render() {
     return (
       <div>

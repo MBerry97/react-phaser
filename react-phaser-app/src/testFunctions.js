@@ -1,8 +1,11 @@
 
+let user = ''
 
 const logToConsole = (msg) => {
-  console.log(msg)
-  return `hello ${msg}`
+  
+  user = msg
+  console.log(user)
+  return `hello ${user}`
 }
   
   module.exports = logToConsole;

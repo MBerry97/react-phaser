@@ -5,7 +5,13 @@ import tileJson from './assets/testmaprealnum2.json'
 import dude from './assets/dude.png'
 import logToConsole from './testFunctions'
 
+
 class Game extends Component {
+  state = {
+    user : ''
+  }
+
+  
   
 componentDidMount() {
   this.game = new Phaser.Game({
@@ -26,15 +32,21 @@ componentDidMount() {
       update: this.update
     }
   })
-
+  this.player = null;
+  this.cursors = null;
 }
 
 // componentDidUpdate(prevProps, prevState) {
-//   if (prevProps.name !== this.props.user) {
+//   if(prevState.user !== this.state.user) {
 //     this.setState({user: this.props.name})
 //   }
 // }
 
+userDisplay = () => {
+  console.log('bruv')
+  
+  return `${this.state.name}`
+}
 
   render() {
     return (
@@ -65,15 +77,56 @@ const map = this.make.tilemap({
   const tileLayer = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
   // this.add.text(50, 225, `${this.props.name}`)
   
-  this.add.image(50, 225, 'dude');
+  // this.add.image(50, 225, 'dude');
 
-  this.add.text(50,225, logToConsole())
+  
+
+  this.player = this.physics.add.sprite(50, 225, 'dude');
+  this.anims.create({
+    key: 'left',
+    frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
+  this.anims.create({
+    key: 'turn',
+    frames: [{ key: 'dude', frame: 4 }],
+    frameRate: 20
+  });
+
+  this.anims.create({
+    key: 'right',
+    frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
+ this.cursors = this.input.keyboard.createCursorKeys();
 }
 
 update (time, delta) {
+ if (this.cursors.left.isDown) {
+    this.player.setVelocityX(-160);
+
+    this.player.anims.play('left', true);
+  }
+  else if (this.cursors.right.isDown) {
+    this.player.setVelocityX(160);
+
+    this.player.anims.play('right', true);
+  }
+  else {
+    this.player.setVelocityX(0);
+
+    this.player.anims.play('turn');
+  }
+}
+
+
 
 }
 
-}
+
 
 export default Game;
