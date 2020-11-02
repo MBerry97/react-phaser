@@ -34,6 +34,8 @@ componentDidMount() {
   })
   this.player = null;
   this.cursors = null;
+  this.camera = null;
+  this.controls = null;
 }
 
 // componentDidUpdate(prevProps, prevState) {
@@ -71,7 +73,7 @@ this.load.spritesheet('dude', 'https://i.imgur.com/L1cGcT6.png', { frameWidth: 3
 
 create () {
 const map = this.make.tilemap({
-    key: 'map',
+    key: 'map', tileWidth: 16, tileHeight: 16
   });
   const tileset = map.addTilesetImage('test', 'tiles');
   const tileLayer = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
@@ -83,10 +85,10 @@ const map = this.make.tilemap({
   const spawnPoint = map.findObject("Objects", obj => obj.name === "Spawn Point")
 
   this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'dude');
-  
+
   this.physics.add.collider(this.player, tileLayer)
   this.anims.create({
-    key: 'left',
+    key: 'a',
     frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
     frameRate: 10,
     repeat: -1
@@ -99,46 +101,64 @@ const map = this.make.tilemap({
   });
 
   this.anims.create({
-    key: 'right',
+    key: 'd',
     frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
     frameRate: 10,
     repeat: -1
   });
 
   this.anims.create({
-    key: 'up',
+    key: 'w',
     frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
     frameRate: 10,
     repeat: -1
   });
 this.anims.create({
-    key: 'down',
+    key: 's',
     frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
     frameRate: 10,
     repeat: -1
   });
 
  this.cursors = this.input.keyboard.createCursorKeys();
+
+ this.cursors = this.input.keyboard.addKeys(
+{up:Phaser.Input.Keyboard.KeyCodes.W,
+down:Phaser.Input.Keyboard.KeyCodes.S,
+left:Phaser.Input.Keyboard.KeyCodes.A,
+right:Phaser.Input.Keyboard.KeyCodes.D});
+
+ const camera = this.cameras.main;
+
+ this.input.keyboard.addKeys('W,S,A,D')
+ 
+  this.controls = new Phaser.Cameras.Controls.FixedKeyControl({
+    camera: camera,
+    // a: this.cursors.right,
+    // right: this.cursors.right,
+    // up: this.cursors.up,
+    // down: this.cursors.down,
+    speed: 0.5
+  });
 }
 
 update (time, delta) {
  if (this.cursors.left.isDown) {
     this.player.setVelocityX(-160);
-
-    this.player.anims.play('left', true);
+    this.player.anims.play('a', true);
   }
   else if (this.cursors.right.isDown) {
     this.player.setVelocityX(160);
 
-    this.player.anims.play('right', true);
+    this.player.anims.play('d', true);
   } 
   else if(this.cursors.up.isDown) {
     this.player.setVelocityY(-160)
-    this.player.anims.play('up', true);
+    this.player.anims.play('w', true);
 
   } else if (this.cursors.down.isDown) {
     this.player.setVelocityY(160)
-    this.player.anims.play('down', true);
+    this.player.anims.play('s', true);
     
   }
   else {
@@ -148,6 +168,7 @@ update (time, delta) {
   }
 
   this.player.body.velocity.normalize().scale(90);
+  this.controls.update(delta)
 }
 
 
