@@ -16,8 +16,8 @@ class Game extends Component {
 componentDidMount() {
   this.game = new Phaser.Game({
     type: Phaser.AUTO,
-    width: 950,
-    height: 600,
+    width: 300,
+    height: 400,
     physics: {
     default: 'arcade',
     arcade: {
@@ -131,16 +131,8 @@ right:Phaser.Input.Keyboard.KeyCodes.D});
  const camera = this.cameras.main;
  camera.startFollow(this.player)
 
- this.input.keyboard.addKeys('W,S,A,D')
  
-  this.controls = new Phaser.Cameras.Controls.FixedKeyControl({
-    camera: camera,
-    // a: this.cursors.right,
-    // right: this.cursors.right,
-    // up: this.cursors.up,
-    // down: this.cursors.down,
-    speed: 0.5
-  });
+  
 
 
 }
@@ -171,7 +163,7 @@ update (time, delta) {
   }
 
   this.player.body.velocity.normalize().scale(90);
-  this.controls.update(delta)
+  
 }
 
 
