@@ -80,9 +80,10 @@ const map = this.make.tilemap({
   
   // this.add.image(50, 225, 'dude');
 
-  
+  const spawnPoint = map.findObject("Objects", obj => obj.name === "Spawn Point")
 
-  this.player = this.physics.add.sprite(50, 225, 'dude');
+  this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'dude');
+  
   this.physics.add.collider(this.player, tileLayer)
   this.anims.create({
     key: 'left',
@@ -110,7 +111,12 @@ const map = this.make.tilemap({
     frameRate: 10,
     repeat: -1
   });
-
+this.anims.create({
+    key: 'down',
+    frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
+    frameRate: 10,
+    repeat: -1
+  });
 
  this.cursors = this.input.keyboard.createCursorKeys();
 }
@@ -132,6 +138,8 @@ update (time, delta) {
 
   } else if (this.cursors.down.isDown) {
     this.player.setVelocityY(160)
+    this.player.anims.play('down', true);
+    
   }
   else {
     this.player.setVelocityX(0);
@@ -139,7 +147,7 @@ update (time, delta) {
     this.player.anims.play('turn');
   }
 
-  this.player.body.velocity.normalize().scale(70);
+  this.player.body.velocity.normalize().scale(90);
 }
 
 
