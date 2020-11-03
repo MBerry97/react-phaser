@@ -63,6 +63,8 @@ class Game extends Component {
     }
 
     create() {
+        var CheckboxesMode = true;  // false = radio mode
+
         const map = this.make.tilemap({
             key: 'map',
         });
@@ -108,8 +110,13 @@ class Game extends Component {
                 name: text
             });
         }
+        console.log(this, "THIS 1");
+
 
         this.createDialog = (scene, x, y, onClick) => {
+            console.log(this, "THIS 2");
+            // let btns = [createButton(this, 'OK'), createButton(this, 'NOT OK')];
+
             let dialog = scene.rexUI.add.dialog({
                 x: x,
                 y: y,
@@ -124,20 +131,25 @@ class Game extends Component {
                     top: 10,
                     bottom: 10
                 },
-                actions: [
-                    scene.rexUI.add.label({
-                        background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
-                        text: scene.add.text(0, 0, 'OK', {
-                            fontSize: '18px'
-                        }),
-                    }),
-                    scene.rexUI.add.label({
-                        background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
-                        text: scene.add.text(0, 0, 'NOT OK', {
-                            fontSize: '18px'
-                        }),
-                    })
-                ],
+                // buttons: scene.rexUI.add.gridButtons({
+                //     x: 400, y: 300,
+                //     width: 300, height: 400,
+        
+                //     // background: background,
+        
+                //     buttons: [createButton(this, 'OK'), createButton(this, 'NOT OK')],
+                //     space: {
+                //         left: 10, right: 10, top: 20, bottom: 20,
+                //         row: 20, column: 10
+                //     },
+        
+                //     type: ((CheckboxesMode) ? 'checkboxes' : 'radio'),
+                //     setValueCallback: function (button, value) {
+                //         // button.getElement('icon')
+                //         //     .setFillStyle((value) ? COLOR_LIGHT : undefined);
+                //     }
+                // }),
+                actions: [createButton(this, 'OK'), createButton(this, 'NOT OK')],
                 actionsAlign: 'left',
                 space: {
                     title: 20,
@@ -151,6 +163,15 @@ class Game extends Component {
             })
                 .layout().pushIntoBounds().popUp(500)
             return dialog;
+        }
+
+        let createButton = function (scene, text) {
+            return scene.rexUI.add.label({
+                background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
+                text: scene.add.text(0, 0, text, {
+                    fontSize: '18px'
+                }),
+            })
         }
 
         this.zone = this.add.zone(200, 200).setSize(100, 100)
