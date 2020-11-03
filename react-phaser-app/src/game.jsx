@@ -128,7 +128,12 @@ class Game extends Component {
                     right: 15,
                     top: 10,
                     bottom: 10
-                }
+                },
+                actions: [
+                    scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0xe91e63),
+                    scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x673ab7),
+                    scene.rexUI.add.roundRectangle(0, 0, 100, 40, 20, 0xbc5100),
+                ]
             }).layout().pushIntoBounds().popUp(500)
             return dialog;
         }
@@ -156,12 +161,10 @@ class Game extends Component {
             if (overlapping && dialog === undefined) {
                 dialog = this.createDialog(this, 200, 200)
                 console.log("popup")
-                // space.enabled = false;
             } else if (dialog !== undefined) {
                 dialog.scaleDownDestroy(100);
                 dialog = undefined;
                 console.log("popdown")
-                // space.enabled = true;
             }
         }
 
