@@ -67,6 +67,8 @@ this.load.spritesheet('dude', 'https://i.imgur.com/L1cGcT6.png', { frameWidth: 3
 }
 
 create () {
+
+  //set up the map
 const map = this.make.tilemap({
     key: 'map', tileWidth: 16, tileHeight: 16
   });
@@ -77,11 +79,16 @@ const map = this.make.tilemap({
   
   // this.add.image(50, 225, 'dude');
 
-  const spawnPoint = map.findObject("Objects", obj => obj.name === "Spawn Point")
 
+  //set spawn point for the sprite
+  const spawnPoint = map.findObject("Objects", obj => obj.name === "Spawn Point")
   this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, 'dude');
 
+  //add collision
   this.physics.add.collider(this.player, tileLayer)
+
+
+  //animations for the sprite
   this.anims.create({
     key: 'a',
     frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
@@ -123,6 +130,8 @@ down:Phaser.Input.Keyboard.KeyCodes.S,
 left:Phaser.Input.Keyboard.KeyCodes.A,
 right:Phaser.Input.Keyboard.KeyCodes.D});
 
+
+//cmaera follows sprite
  const camera = this.cameras.main;
  camera.startFollow(this.player)
 
