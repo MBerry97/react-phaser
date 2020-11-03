@@ -112,7 +112,6 @@ class Game extends Component {
         }
         console.log(this, "THIS 1");
 
-
         this.createDialog = (scene, x, y, onClick) => {
             let dialog = scene.rexUI.add.dialog({
                 x: x,
@@ -140,21 +139,21 @@ class Game extends Component {
                     bottom: 10,
                 }
             })
+            .on('button.click', function (button, groupName, index, pointer, event) {
+                        this.print.text += 'clicked \n';
+                    }, this)
+                    .on('button.over', function (button, groupName, index, pointer, event) {
+                        button.getElement('background').setStrokeStyle(1, 0xffffff);
+                    })
+                    .on('button.out', function (button, groupName, index, pointer, event) {
+                        button.getElement('background').setStrokeStyle();
+                        console.log("CLICKED");
+                    })
                 .layout().pushIntoBounds().popUp(500)
             return dialog;
         }
 
-        this.print = this.add.text(0, 0, '');
-        // this.dialog
-        //     .on('button.click', function (button, groupName, index, pointer, event) {
-        //         this.print.text += groupName + '-' + index + ': ' + button.text + '\n';
-        //     }, this)
-        //     .on('button.over', function (button, groupName, index, pointer, event) {
-        //         button.getElement('background').setStrokeStyle(1, 0xffffff);
-        //     })
-        //     .on('button.out', function (button, groupName, index, pointer, event) {
-        //         button.getElement('background').setStrokeStyle();
-        //     });
+        this.print = this.add.text(0, 0, 'CLICKED');
 
         let createButton = function (scene, text) {
             return scene.rexUI.add.label({
@@ -203,10 +202,6 @@ class Game extends Component {
                 dialog = undefined;
             }
         }, this);
-
-        // this.dialog.on('button.click', function (button, pointer, event) {
-        //     console.log(button.text)
-        // }, this)
     }
 
     update(time, delta) {
