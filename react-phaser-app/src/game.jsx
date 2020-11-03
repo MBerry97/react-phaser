@@ -130,9 +130,18 @@ class Game extends Component {
                     bottom: 10
                 },
                 actions: [
-                    scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0xe91e63),
-                    scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x673ab7),
-                    scene.rexUI.add.roundRectangle(0, 0, 100, 40, 20, 0xbc5100),
+                    scene.rexUI.add.label({
+                        background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
+                        text: scene.add.text(0, 0, 'OK', {
+                            fontSize: '24px'
+                        }),
+                        space: {
+                            left: 10,
+                            right: 10,
+                            top: 10,
+                            bottom: 10
+                        }
+                    })
                 ]
             }).layout().pushIntoBounds().popUp(500)
             return dialog;
@@ -169,8 +178,10 @@ class Game extends Component {
         }
 
         this.input.on('pointerdown', function (pointer) {
-            dialog.scaleDownDestroy(100);
-            dialog = undefined;
+            if (dialog.isInTouching(pointer)) {
+                dialog.scaleDownDestroy(100);
+                dialog = undefined;
+            }
         });
     }
 
