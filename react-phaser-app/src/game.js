@@ -26,16 +26,19 @@ componentDidMount() {
     },
   },
     parent: 'game-container',
-    scene: {
+    scene: [{
       preload: this.preload,
       create: this.create,
       update: this.update
-    }
+    }]
   })
   this.player = null;
   this.cursors = null;
   this.camera = null;
   this.controls = null;
+  this.score = null;
+  this.scoreDisplay = null;
+  
 }
 
 // componentDidUpdate(prevProps, prevState) {
@@ -76,9 +79,16 @@ const map = this.make.tilemap({
   const tileLayer = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
   tileLayer.setCollisionByProperty({ collides: true });
   // this.add.text(50, 225, `${this.props.name}`)
-  
   // this.add.image(50, 225, 'dude');
 
+  //score display, scrollfator fixes it to the top of the screen
+  this.score = 0;
+  this.scoreDisplay = this.add.text(0, 0, `score: ${this.score}`, {fontSize: '32px'}).setScrollFactor(0)
+ 
+  this.updateScore = () => {
+    this.score += 1;
+    this.scoreDisplay.setText(`score: ${this.score}`)
+  }
 
   //set spawn point for the sprite
   const spawnPoint = map.findObject("Objects", obj => obj.name === "Spawn Point")
@@ -122,20 +132,23 @@ this.anims.create({
     repeat: -1
   });
 
- this.cursors = this.input.keyboard.createCursorKeys();
 
+//creating custom cursors/controls
+ this.cursors = this.input.keyboard.createCursorKeys();
  this.cursors = this.input.keyboard.addKeys(
 {up:Phaser.Input.Keyboard.KeyCodes.W,
 down:Phaser.Input.Keyboard.KeyCodes.S,
 left:Phaser.Input.Keyboard.KeyCodes.A,
-right:Phaser.Input.Keyboard.KeyCodes.D});
+right:Phaser.Input.Keyboard.KeyCodes.D,
+});
 
+this.spaceBar = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
 //cmaera follows sprite
  const camera = this.cameras.main;
  camera.startFollow(this.player)
 
- 
+
   
 
 
@@ -159,11 +172,15 @@ update (time, delta) {
     this.player.setVelocityY(160)
     this.player.anims.play('s', true);
     
-  }
+  } 
   else {
     this.player.setVelocityX(0);
      this.player.setVelocityY(0);
     this.player.anims.play('turn');
+  }
+
+  if(this.spaceBar.isDown) {
+    this.updateScore()
   }
 
   this.player.body.velocity.normalize().scale(90);
