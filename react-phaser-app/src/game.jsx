@@ -39,7 +39,7 @@ class Game extends Component {
         this.player = null;
         this.cursors = null;
     }
-    
+
     userDisplay = () => {
         console.log('bruv')
 
@@ -47,11 +47,11 @@ class Game extends Component {
     }
 
     render() {
-        return ( 
-        <div className='game-container'>
-            <h1> hi </h1> 
-            <h2> { this.props.name } </h2> 
-        </div>
+        return (
+            <div className='game-container'>
+                <h1> hi </h1>
+                <h2> {this.props.name} </h2>
+            </div>
         );
     }
 
@@ -94,6 +94,21 @@ class Game extends Component {
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
+        this.createButton = (scene, text) => {
+            return scene.rexUI.add.label({
+                background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 10).setStrokeStyle(2),
+                icon: scene.add.circle(0, 0, 10).setStrokeStyle(1),
+                text: scene.add.text(0, 0, text, {
+                    fontSize: 18
+                }),
+                space: {
+                    icon: 10
+                },
+                align: 'center',
+                name: text
+            });
+        }
+
         this.createDialog = (scene, x, y, onClick) => {
             let dialog = scene.rexUI.add.dialog({
                 x: x,
@@ -117,38 +132,38 @@ class Game extends Component {
                         }),
                     }),
                     scene.rexUI.add.label({
-                    background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
-                    text: scene.add.text(0, 0, 'NOT OK', {
-                        fontSize: '18px'
-                    }),
-                })
-            ],
-            actionsAlign: 'left',
-            space: {
-                title: 20,
-                action: 10,
+                        background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
+                        text: scene.add.text(0, 0, 'NOT OK', {
+                            fontSize: '18px'
+                        }),
+                    })
+                ],
+                actionsAlign: 'left',
+                space: {
+                    title: 20,
+                    action: 10,
 
-                left: 15,
-                right: 15,
-                top: 10,
-                bottom: 10,
-            }
-        })
-        .layout().pushIntoBounds().popUp(500)
-        return dialog;
-    }
-    
+                    left: 15,
+                    right: 15,
+                    top: 10,
+                    bottom: 10,
+                }
+            })
+                .layout().pushIntoBounds().popUp(500)
+            return dialog;
+        }
+
         this.zone = this.add.zone(200, 200).setSize(100, 100)
         this.physics.world.enable(this.zone)
 
-        this.player.on('overlapstart', function() {
+        this.player.on('overlapstart', function () {
             this.body.debugBodyColor = 0XFF3300
             overlapping = true;
             console.log('overlap start')
             console.time('overlap')
         })
 
-        this.player.on('overlapend', function() {
+        this.player.on('overlapend', function () {
             this.body.debugBodyColor = 0X00FF33
             overlapping = false;
             console.log('overlap end')
@@ -161,6 +176,7 @@ class Game extends Component {
             if (overlapping && dialog === undefined) {
                 dialog = this.createDialog(this, 200, 200)
                 console.log("popup")
+                console.log(dialog, 'dialog')
             } else if (dialog !== undefined) {
                 dialog.scaleDownDestroy(100);
                 dialog = undefined;
@@ -171,13 +187,19 @@ class Game extends Component {
         this.input.on('pointerdown', function (pointer) {
             var x = pointer.x,
                 y = pointer.y;
-                
-                console.log(pointer, "pointer");
-                if (dialog.isInTouching(pointer)) {
+
+            console.log(pointer, "pointer");
+            if (dialog !== undefined && dialog.isInTouching(pointer)) {
                 dialog.scaleDownDestroy(100);
                 dialog = undefined;
             }
         }, this);
+
+        // this.dialog.on('button.click', function (button, pointer, event) {
+        //     console.log(button.text)
+        // }, this)
+
+
     }
 
     update(time, delta) {
