@@ -114,9 +114,6 @@ class Game extends Component {
 
 
         this.createDialog = (scene, x, y, onClick) => {
-            console.log(this, "THIS 2");
-            // let btns = [createButton(this, 'OK'), createButton(this, 'NOT OK')];
-
             let dialog = scene.rexUI.add.dialog({
                 x: x,
                 y: y,
@@ -131,24 +128,6 @@ class Game extends Component {
                     top: 10,
                     bottom: 10
                 },
-                // buttons: scene.rexUI.add.gridButtons({
-                //     x: 400, y: 300,
-                //     width: 300, height: 400,
-        
-                //     // background: background,
-        
-                //     buttons: [createButton(this, 'OK'), createButton(this, 'NOT OK')],
-                //     space: {
-                //         left: 10, right: 10, top: 20, bottom: 20,
-                //         row: 20, column: 10
-                //     },
-        
-                //     type: ((CheckboxesMode) ? 'checkboxes' : 'radio'),
-                //     setValueCallback: function (button, value) {
-                //         // button.getElement('icon')
-                //         //     .setFillStyle((value) ? COLOR_LIGHT : undefined);
-                //     }
-                // }),
                 actions: [createButton(this, 'OK'), createButton(this, 'NOT OK')],
                 actionsAlign: 'left',
                 space: {
@@ -164,6 +143,18 @@ class Game extends Component {
                 .layout().pushIntoBounds().popUp(500)
             return dialog;
         }
+
+        this.print = this.add.text(0, 0, '');
+        // this.dialog
+        //     .on('button.click', function (button, groupName, index, pointer, event) {
+        //         this.print.text += groupName + '-' + index + ': ' + button.text + '\n';
+        //     }, this)
+        //     .on('button.over', function (button, groupName, index, pointer, event) {
+        //         button.getElement('background').setStrokeStyle(1, 0xffffff);
+        //     })
+        //     .on('button.out', function (button, groupName, index, pointer, event) {
+        //         button.getElement('background').setStrokeStyle();
+        //     });
 
         let createButton = function (scene, text) {
             return scene.rexUI.add.label({
@@ -206,9 +197,6 @@ class Game extends Component {
         }
 
         this.input.on('pointerdown', function (pointer) {
-            var x = pointer.x,
-                y = pointer.y;
-
             console.log(pointer, "pointer");
             if (dialog !== undefined && dialog.isInTouching(pointer)) {
                 dialog.scaleDownDestroy(100);
@@ -219,8 +207,6 @@ class Game extends Component {
         // this.dialog.on('button.click', function (button, pointer, event) {
         //     console.log(button.text)
         // }, this)
-
-
     }
 
     update(time, delta) {
