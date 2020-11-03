@@ -41,13 +41,7 @@ class Game extends Component {
         this.player = null;
         this.cursors = null;
     }
-
-    // componentDidUpdate(prevProps, prevState) {
-    //   if(prevState.user !== this.state.user) {
-    //     this.setState({user: this.props.name})
-    //   }
-    // }
-
+    
     userDisplay = () => {
         console.log('bruv')
 
@@ -68,11 +62,6 @@ class Game extends Component {
         this.load.tilemapTiledJSON('map', tileJson);
         this.load.spritesheet('dude', 'https://i.imgur.com/L1cGcT6.png', { frameWidth: 32, frameHeight: 48 })
         this.load.scenePlugin('rexuiplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js', 'rexUI', 'rexUI');
-        // this.load.text('user', this.props.name)
-        //  this.load.image('dude',
-        //     dude,
-        //     { frameWidth: 32, frameHeight: 48 }
-        //   );
     }
 
     create() {
@@ -83,11 +72,6 @@ class Game extends Component {
         const tileLayer = map.createStaticLayer('Tile Layer 1', tileset, 0, 0);
         let overlapping = false;
         let dialog = undefined;
-
-        console.log(this, "THIS")
-
-         // this.add.text(50, 225, `${this.props.name}`)
-         // this.add.image(50, 225, 'dude');
 
         this.player = this.physics.add.sprite(50, 225, 'dude');
         this.anims.create({
@@ -112,8 +96,6 @@ class Game extends Component {
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        // const spaceKey = this.input.keyboard.addKey('space', enableCapture, emitOnRepeat);
-
         this.createDialog = (scene, x, y, onClick) => {
             let dialog = scene.rexUI.add.dialog({
                 x: x,
@@ -133,20 +115,32 @@ class Game extends Component {
                     scene.rexUI.add.label({
                         background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
                         text: scene.add.text(0, 0, 'OK', {
-                            fontSize: '24px'
+                            fontSize: '18px'
                         }),
-                        space: {
-                            left: 10,
-                            right: 10,
-                            top: 10,
-                            bottom: 10
-                        }
-                    })
-                ]
-            }).layout().pushIntoBounds().popUp(500)
-            return dialog;
-        }
+                    }),
+                    
+                    scene.rexUI.add.label({
+                    background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
+                    text: scene.add.text(0, 0, 'NOT OK', {
+                        fontSize: '18px'
+                    }),
+                })
+            ],
+            actionsAlign: 'left',
+            space: {
+                title: 20,
+                action: 10,
 
+                left: 15,
+                right: 15,
+                top: 10,
+                bottom: 10,
+            }
+        })
+        .layout().pushIntoBounds().popUp(500)
+        return dialog;
+    }
+    
         this.zone = this.add.zone(200, 200).setSize(100, 100)
         this.physics.world.enable(this.zone)
 
