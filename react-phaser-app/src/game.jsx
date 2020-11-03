@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import Phaser from 'phaser'
 import tileSet from './assets/tuxmon-sample.png'
 import tileJson from './assets/testmaprealnum2.json'
-import dude from './assets/dude.png'
-import logToConsole from './testFunctions'
 import UIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin.js';
 
 
@@ -118,7 +116,6 @@ class Game extends Component {
                             fontSize: '18px'
                         }),
                     }),
-                    
                     scene.rexUI.add.label({
                     background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
                     text: scene.add.text(0, 0, 'NOT OK', {
@@ -172,11 +169,15 @@ class Game extends Component {
         }
 
         this.input.on('pointerdown', function (pointer) {
-            if (dialog.isInTouching(pointer)) {
+            var x = pointer.x,
+                y = pointer.y;
+                
+                console.log(pointer, "pointer");
+                if (dialog.isInTouching(pointer)) {
                 dialog.scaleDownDestroy(100);
                 dialog = undefined;
             }
-        });
+        }, this);
     }
 
     update(time, delta) {
