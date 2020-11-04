@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import Phaser from 'phaser'
 import tileSet from './assets/tuxmon-sample.png'
 import tileJson from './assets/testmaprealnum2.json'
+import { Link } from '@reach/router'
 import dude from './assets/dude.png'
 import logToConsole from './testFunctions'
+import VictoryButton from './comps/Victory_Button'
 
 class Game extends Component {
   state = {
@@ -29,7 +31,10 @@ class Game extends Component {
         preload: this.preload,
         create: this.create,
         update: this.update
-      }]
+      }],
+      dom: {
+        createContainer: true
+      }
     })
     this.player = null;
     this.cursors = null;
@@ -96,18 +101,19 @@ class Game extends Component {
       this.physics.pause();
       this.player.setTint(0xff0000);
       console.log('You have won!!');
-      this.openExternalLink();
+      this.add.dom(0, 0, VictoryButton());
+      // this.openExternalLink();
     }
     // Send player to the win page
     this.openExternalLink = () => {
-      let url = 'http://localhost:3000/win';
-      let s = window.open(url, '_blank');
-      if (s && s.focus) {
-        s.focus();
-      }
-      else if (!s) {
-        window.location.href = url;
-      }
+      let url = 'http://www.google.co.uk';
+      window.open(url, '_blank');
+      // if (s && s.focus) {
+      //   s.focus();
+      // }
+      // else if (!s) {
+      //   window.location.href = url;
+      // }
     }
 
     //set spawn point for the sprite
