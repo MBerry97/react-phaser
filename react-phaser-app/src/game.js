@@ -5,7 +5,6 @@ import tileJson from './assets/testmaprealnum2.json'
 import dude from './assets/dude.png'
 import logToConsole from './testFunctions'
 
-
 class Game extends Component {
   state = {
     user: ''
@@ -99,8 +98,6 @@ class Game extends Component {
       this.player.setTint(0xff0000);
 
       console.log('You have won!!');
-
-
     }
 
     //set spawn point for the sprite
@@ -118,20 +115,17 @@ class Game extends Component {
       frameRate: 10,
       repeat: -1
     });
-
     this.anims.create({
       key: 'turn',
       frames: [{ key: 'dude', frame: 4 }],
       frameRate: 20
     });
-
     this.anims.create({
       key: 'd',
       frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
       frameRate: 10,
       repeat: -1
     });
-
     this.anims.create({
       key: 'w',
       frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
@@ -144,8 +138,6 @@ class Game extends Component {
       frameRate: 10,
       repeat: -1
     });
-
-
     //creating custom cursors/controls
     this.cursors = this.input.keyboard.createCursorKeys();
     this.cursors = this.input.keyboard.addKeys(
@@ -200,11 +192,6 @@ class Game extends Component {
     this.player.body.velocity.normalize().scale(90);
 
   }
-
-
-
 }
-
-
 
 export default Game;
