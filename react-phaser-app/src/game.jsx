@@ -110,7 +110,6 @@ class Game extends Component {
                 name: text
             });
         }
-        console.log(this, "THIS 1");
 
         this.createDialog = (scene, x, y, onClick) => {
             let dialog = scene.rexUI.add.dialog({
@@ -140,14 +139,18 @@ class Game extends Component {
                 }
             })
             .on('button.click', function (button, groupName, index, pointer, event) {
+                                        console.log("ANYTHING");
                         this.print.text += 'clicked \n';
+                        console.log("ANYTHING");
+                        console.log(this, "this");
+                        console.log(button.text, "button text");
+
                     }, this)
                     .on('button.over', function (button, groupName, index, pointer, event) {
                         button.getElement('background').setStrokeStyle(1, 0xffffff);
                     })
                     .on('button.out', function (button, groupName, index, pointer, event) {
                         button.getElement('background').setStrokeStyle();
-                        console.log("CLICKED");
                     })
                 .layout().pushIntoBounds().popUp(500)
             return dialog;
