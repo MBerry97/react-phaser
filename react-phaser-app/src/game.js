@@ -94,10 +94,20 @@ class Game extends Component {
     //Finishing the game
     this.finishGame = () => {
       this.physics.pause();
-
       this.player.setTint(0xff0000);
-
       console.log('You have won!!');
+      this.openExternalLink();
+    }
+    // Send player to the win page
+    this.openExternalLink = () => {
+      let url = 'http://localhost:3000/win';
+      let s = window.open(url, '_blank');
+      if (s && s.focus) {
+        s.focus();
+      }
+      else if (!s) {
+        window.location.href = url;
+      }
     }
 
     //set spawn point for the sprite
@@ -192,6 +202,7 @@ class Game extends Component {
     this.player.body.velocity.normalize().scale(90);
 
   }
+
 }
 
 export default Game;
