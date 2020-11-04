@@ -126,7 +126,7 @@ class Game extends Component {
                     top: 10,
                     bottom: 10
                 },
-                actions: [createButton(this, 'OK'), createButton(this, 'NOT OK')],
+                actions: [createLabel(this, 'OK'), createLabel(this, 'NOT OK')],
                 actionsAlign: 'left',
                 space: {
                     title: 20,
@@ -158,7 +158,7 @@ class Game extends Component {
 
         this.print = this.add.text(0, 0, 'CLICKED');
 
-        let createButton = function (scene, text) {
+        let createLabel = function (scene, text) {
             return scene.rexUI.add.label({
                 background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 20, 0x5e92f3),
                 text: scene.add.text(0, 0, text, {
