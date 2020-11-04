@@ -96,21 +96,6 @@ class Game extends Component {
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.createButton = (scene, text) => {
-            return scene.rexUI.add.label({
-                background: scene.rexUI.add.roundRectangle(0, 0, 0, 0, 10).setStrokeStyle(2),
-                icon: scene.add.circle(0, 0, 10).setStrokeStyle(1),
-                text: scene.add.text(0, 0, text, {
-                    fontSize: 18
-                }),
-                space: {
-                    icon: 10
-                },
-                align: 'center',
-                name: text
-            });
-        }
-
         this.createDialog = (scene, x, y, onClick) => {
             let dialog = scene.rexUI.add.dialog({
                 x: x,
@@ -140,7 +125,7 @@ class Game extends Component {
             })
             .on('button.click', function (button, groupName, index, pointer, event) {
                                         console.log("ANYTHING");
-                        this.print.text += 'clicked \n';
+                        this.print.text += 'true \n';
                         console.log("ANYTHING");
                         console.log(this, "this");
                         console.log(button.text, "button text");
@@ -156,7 +141,7 @@ class Game extends Component {
             return dialog;
         }
 
-        this.print = this.add.text(0, 0, 'CLICKED');
+        this.print = this.add.text(0, 0, 'CLICKED?');
 
         let createLabel = function (scene, text) {
             return scene.rexUI.add.label({
